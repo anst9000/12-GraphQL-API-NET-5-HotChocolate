@@ -30,8 +30,13 @@ namespace CommanderGQL
             services
                 .AddGraphQLServer()
                 .AddQueryType<Query>()
+                .AddMutationType<Mutation>()
+                .AddSubscriptionType<Subscription>()
                 .AddType<PlatformType>()
-                .AddType<CommandType>();
+                .AddType<CommandType>()
+                .AddFiltering()
+                .AddSorting()
+                .AddInMemorySubscriptions();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -40,6 +45,8 @@ namespace CommanderGQL
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseWebSockets();
 
             app.UseRouting();
 
